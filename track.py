@@ -10,6 +10,11 @@ def load_track(file_name):
 
 
 def distance(lat1, lng1, lat2, lng2):
+    """Return Euclidean distance (in kilometers) between two coordinates)
+
+    >>> distance(0, 0, 1, 1)
+    144.1700384962146
+    """
     delta_lat = (lat1 - lat2) * lat_km
     delta_lng = (lng1 - lng2) * lng_km
     return np.hypot(delta_lat, delta_lng)

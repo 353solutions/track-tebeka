@@ -1,0 +1,7 @@
+venv
+
+
+# news/changed (on disk)
+# git add -> (staging area)
+# git commit -> (history)
+# git push -> (history on server)

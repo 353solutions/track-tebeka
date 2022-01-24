@@ -1,9 +1,11 @@
-# Production requirements
+# Development requirements
 
-matplotlib==3.5.1
-numpy==1.22.0
-pandas==1.3.5
+-r prod-requirements.txt
 
+pytest==6.2.5
+
+# To check for python, run in console
+# python -m pytest --version
 
 # From terminal
 # python3.9 -m venv venv

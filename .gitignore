@@ -1,7 +1,7 @@
 venv
 
 
-# news/changed (on disk)
+# news/changed (on disk, untracked for new files)
 # git add -> (staging area)
 # git commit -> (history)
 # git push -> (history on server)

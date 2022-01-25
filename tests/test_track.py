@@ -1,3 +1,5 @@
+import yaml
+
 import track
 import pytest
 
@@ -23,10 +25,16 @@ distance_cases = [
 # dist_cases.yml
 # You'll need to install PyYAML to read YAML files
 # import yaml
-# with open(...) as fp:
+# with open('tests/dist_cases.yml') as fp:
 #    data = yaml.safe_load(fp)  # data is a list of dicts
 
-@pytest.mark.parametrize('coord1, coord2, expected', distance_cases)
+def load_dist_cases():
+    with open('dist_cases.yml') as fp:
+        data = yaml.safe_load(fp)
+
+    return []
+
+@pytest.mark.parametrize('coord1, coord2, expected', load_dist_cases())
 def test_distance_many(coord1, coord2, expected):
     lat1, lng1 = coord1
     lat2, lng2 = coord2

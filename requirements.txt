@@ -3,6 +3,7 @@
 -r prod-requirements.txt
 
 pytest==6.2.5
+PyYAML==6.0
 
 # To check for python, run in console
 # python -m pytest --version

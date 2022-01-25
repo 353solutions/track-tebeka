@@ -32,7 +32,13 @@ def load_dist_cases():
     with open('dist_cases.yml') as fp:
         data = yaml.safe_load(fp)
 
-    return []
+    cases = []
+    for case in data:
+        coord1 = (case['lat1'], case['lng1'])
+        coord2 = (case['lat2'], case['lng2'])
+        cases.append([coord1, coord2, case['distance']])
+    return cases
+
 
 @pytest.mark.parametrize('coord1, coord2, expected', load_dist_cases())
 def test_distance_many(coord1, coord2, expected):

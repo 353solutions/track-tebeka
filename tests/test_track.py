@@ -1,7 +1,13 @@
+import math
+from pathlib import Path
+
 import yaml
+from hypothesis import given
+from hypothesis.strategies import floats
 
 import track
 import pytest
+from schema import track_schema
 
 
 def test_smoke():
@@ -28,8 +34,11 @@ distance_cases = [
 # with open('tests/dist_cases.yml') as fp:
 #    data = yaml.safe_load(fp)  # data is a list of dicts
 
+tests_dir = Path(__file__).absolute().parent
+
+
 def load_dist_cases():
-    with open('dist_cases.yml') as fp:
+    with open(tests_dir / 'dist_cases.yml') as fp:
         data = yaml.safe_load(fp)
 
     cases = []
@@ -46,3 +55,40 @@ def test_distance_many(coord1, coord2, expected):
     lat2, lng2 = coord2
     dist = track.distance(lat1, lng1, lat2, lng2)
     assert expected == dist
+
+
+def test_distance_type_error():
+    with pytest.raises(TypeError):
+        track.distance('1', 1, 0, 0)
+
+    # try:
+    #     track.distance('1', 1, 0, 0)
+    #     assert False, 'did not raise'
+    # except TypeError:
+    #     pass
+
+
+# from hypothesis import given
+# from hypothesis.strategies import floats
+
+@given(floats(), floats(), floats(), floats())
+def test_distance_fuzz(lat1, lng1, lat2, lng2):
+    # print(lat1, lng1, lat2, lng2)
+    # run: python -m pytest -s
+    dist = track.distance(lat1, lng1, lat2, lng2)
+    if math.isnan(dist):
+        return
+    assert dist >= 0
+
+# from schema import track_schema
+def test_load_track():
+    csv_file = tests_dir / 'track.csv'
+    df = track.load_track(csv_file)
+    track_schema.validate(df)
+
+
+"""
+Running tests:
+- python -m flake8 track.py tests
+- python -m pytest -v
+"""

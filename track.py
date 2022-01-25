@@ -1,10 +1,14 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from schema import track_schema
+from pandera import check_output, check_input
 
 lat_km = 92
 lng_km = 111
 
 
+@check_output(track_schema)
 def load_track(file_name):
     return pd.read_csv(file_name, parse_dates=['time'])
 
@@ -20,6 +24,7 @@ def distance(lat1, lng1, lat2, lng2):
     return np.hypot(delta_lat, delta_lng)
 
 
+@check_input(track_schema)
 def running_speed(df):
     dist_km = distance(
         df['lat'], df['lng'],
@@ -35,6 +40,7 @@ def plot_speed(date, speed_kmh):
     ax.set_xticks([])  # Remove "None"
     ax.set_ylabel(r'Running speed $\frac{km}{h}$')
     return ax
+
 
 # __name__ -> dunder name
 if __name__ == '__main__':

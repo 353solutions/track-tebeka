@@ -1,8 +1,11 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from schema import track_schema
-from pandera import check_output, check_input
+from pandera import check_input
+from pandera import check_output
+import logging
+
+# relative import
+from .schema import track_schema
 
 lat_km = 92
 lng_km = 111
@@ -10,10 +13,16 @@ lng_km = 111
 
 @check_output(track_schema)
 def load_track(file_name):
-    return pd.read_csv(file_name, parse_dates=['time'])
+    logging.info('loading %s', file_name)
+    # The below will create a new string even if INFO level not enabled
+    # logging.info(f'loading {file_name}')
+    df = pd.read_csv(file_name, parse_dates=['time'])
+    logging.info('%s loaded %d rows', file_name, len(df))
+    return df
 
 
-def distance(lat1, lng1, lat2, lng2):
+# type hints
+def distance(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     """Return Euclidean distance (in kilometers) between two coordinates)
 
     >>> distance(0, 0, 1, 1)
@@ -40,18 +49,3 @@ def plot_speed(date, speed_kmh):
     ax.set_xticks([])  # Remove "None"
     ax.set_ylabel(r'Running speed $\frac{km}{h}$')
     return ax
-
-
-# __name__ -> dunder name
-if __name__ == '__main__':
-    from argparse import ArgumentParser, FileType
-
-    parser = ArgumentParser(description='Generate box plot of running speed')
-    parser.add_argument('csv_file', help='CSV file', type=FileType('r'))
-    parser.add_argument('out_file', help='Output file', type=FileType('w'))
-    args = parser.parse_args()
-
-    df = load_track(args.csv_file.name)
-    speed = running_speed(df)
-    ax = plot_speed('2022-01-23', speed)
-    ax.figure.savefig(args.out_file.name)

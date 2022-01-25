@@ -7,7 +7,7 @@ from hypothesis.strategies import floats
 
 import track
 import pytest
-from schema import track_schema
+from track.schema import track_schema
 
 
 def test_smoke():
@@ -80,6 +80,7 @@ def test_distance_fuzz(lat1, lng1, lat2, lng2):
         return
     assert dist >= 0
 
+
 # from schema import track_schema
 def test_load_track():
     csv_file = tests_dir / 'track.csv'
@@ -89,6 +90,6 @@ def test_load_track():
 
 """
 Running tests:
-- python -m flake8 track.py tests
+- python -m flake8 lib.py tests
 - python -m pytest -v
 """

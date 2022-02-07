@@ -1,0 +1,17 @@
+# Development requirements
+
+-r prod-requirements.txt
+
+flake8==4.0.1
+flake8-bugbear==22.1.11
+hypothesis==6.36.0
+pandera==0.8.1
+pytest==6.2.5
+PyYAML==6.0
+
+# To check for python, run in console
+# python -m pytest --version
+
+# From terminal
+# python3.9 -m venv venv
+# ./venv/bin/python -m pip install -r requirements.txt

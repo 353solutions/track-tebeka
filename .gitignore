@@ -1,0 +1,9 @@
+.hypothesis
+.pytest_cache
+__pycache__
+venv
+
+# news/changed (on disk, untracked for new files)
+# git add -> (staging area)
+# git commit -> (history)
+# git push -> (history on server)

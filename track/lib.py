@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
-from pandera import check_input
-from pandera import check_output
+from pandera import check_input, check_output
 import logging
 
 # relative import

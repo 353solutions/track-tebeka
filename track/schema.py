@@ -1,3 +1,5 @@
+"""Define common schema for data"""
+
 import pandera as pa
 import pandas as pd
 
